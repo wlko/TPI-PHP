@@ -48,23 +48,23 @@
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Atributos comunes de todas las tareas
                 $nombre = $_POST['nombre'];
-                $descripcion = $_POST['descripcion'] ? $_POST['descripcion'] : '';
+                $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : '';
                 $categoria = $_POST['categoria'];
 
                 if ($categoria == 'Proceso') {
-                    $subtareas = $_POST['tareasHidden'];
+                    $subtareas = json_decode($_POST['tareasHidden']);
                 }
                 
                 // Dependiendo del tipo de tarea, instanciar la clase correspondiente
                 switch ($categoria) {
                     case 'Contacto':
-                        $tarea = new TareaContacto($nombre, $descripcion, $_POST['nombreContacto'], $_POST['email'], $_POST['telefono'], $_POST['razon']);
+                        $tarea = new TareaContacto($nombre, $descripcion, $categoria, $_POST['nombreContacto'], $_POST['email'], $_POST['telefono'], $_POST['razon']);
                         break;
                     case 'Proceso':
-                        $tarea = new TareaProceso($nombre, $descripcion, $subtareas);
+                        $tarea = new TareaProceso($nombre, $descripcion, $categoria, $subtareas);
                         break;
                     case 'Recordatorio':
-                        $tarea = new TareaRecordatorio($nombre, $descripcion, $_POST['fecha'], $_POST['hora']);
+                        $tarea = new TareaRecordatorio($nombre, $descripcion, $categoria, $_POST['fecha'], $_POST['hora']);
                         break;
                     default:
                         // Tratar cualquier otro caso o lanzar un error si es necesario

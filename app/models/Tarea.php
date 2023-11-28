@@ -2,12 +2,14 @@
     class Tarea {
         private $nombre;
         private $descripcion;
+        private $categoria;
         private $hecha = false;
 
         // Constructor
-        public function __construct($nombre, $descripcion = '') {
+        public function __construct($nombre, $descripcion, $categoria) {
             $this->nombre = $nombre;
             $this->descripcion = $descripcion;
+            $this->categoria = $categoria;
         }
         
         // Getters y setters
@@ -17,6 +19,10 @@
 
         public function getDescripcion() {
             return $this->descripcion;
+        }
+
+        public function getCategoria() {
+            return $this->categoria;
         }
 
         public function getHecha() {

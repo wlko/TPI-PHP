@@ -32,9 +32,11 @@
         // Eliminar tarea por ID
         public function eliminarTarea($id) {
             // Obtenemos todas las tareas de la sesión
-            $tareas = $this->obtenerTareas();    
+            $tareas = $this->obtenerTareas();        
             // Eliminamos la tarea con el ID especificado
-            unset($tareas[$id]);    
+            unset($tareas[$id]);        
+            // Reindexamos el array para asegurarnos de que los índices sean consecutivos
+            $tareas = array_values($tareas);        
             // Guardamos las tareas actualizadas en la sesión
             $_SESSION[$this->sessionKey] = $tareas;
         }

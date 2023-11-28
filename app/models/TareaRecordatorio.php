@@ -2,22 +2,17 @@
     require_once('Tarea.php');
 
     class TareaRecordatorio extends Tarea {
-        private $categoria = 'Recordatorio';
         private $fecha;
         private $hora;
 
         // Constructor
-        public function __construct($nombre, $fecha, $hora, $descripcion = '') {
-            parent::__construct($nombre, $descripcion);
+        public function __construct($nombre, $descripcion, $categoria, $fecha, $hora) {
+            parent::__construct($nombre, $descripcion, $categoria);
             $this->fecha = $fecha;
             $this->hora = $hora;
         }
 
         // Getters y setters
-        public function getCategoria() {
-            return $this->categoria;
-        }
-
         public function getFecha() {
             return $this->fecha;
         }

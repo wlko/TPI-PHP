@@ -36,13 +36,13 @@
 
                             <div class="row mb-2 g-2">
                                 <div class="col-auto mx-auto">
-                                    <button type="button" class="btn btn-dark btn-sm" onclick="mostrarCategoria('Contacto')">Contacto</button>
+                                    <button type="button" class="btn btn-dark btn-sm text-success" onclick="mostrarCategoria('Contacto')">Contacto</button>
                                 </div>
                                 <div class="col-auto mx-auto">
-                                    <button type="button" class="btn btn-dark btn-sm" onclick="mostrarCategoria('Proceso')">Proceso</button>
+                                    <button type="button" class="btn btn-dark btn-sm text-warning" onclick="mostrarCategoria('Proceso')">Proceso</button>
                                 </div>
                                 <div class="col-auto mx-auto">
-                                    <button type="button" class="btn btn-dark btn-sm" onclick="mostrarCategoria('Recordatorio')">Recordatorio</button>
+                                    <button type="button" class="btn btn-dark btn-sm text-primary" onclick="mostrarCategoria('Recordatorio')">Recordatorio</button>
                                 </div>
                             </div>
 
@@ -52,17 +52,74 @@
                     
                     <main class="col-6">
                         <!-- Lista de tareas -->
-                        <ul>
-                            <?php if (!empty($tareas)) : ?>
-                                <?php foreach ($tareas as $tarea) : ?>
-                                    <li>
-                                        <?php echo $tarea->getNombre(); ?>
-                                    </li>
-                                <?php endforeach; ?>
-                            <?php else : ?>
-                                <p>Aun no hay tareas cargadas</p>
-                            <?php endif; ?>
-                        </ul>
+                        <?php if (!empty($tareas)) : ?>
+                            <div class="accordion" id="accordionExample">
+                            <?php foreach ($tareas as $key=>$tarea) : 
+                                $numTarea = $key + 1;
+                                $coloresTitulo = ["Contacto"=>"bg-success-subtle", "Proceso"=>"bg-warning-subtle", "Recordatorio"=>"bg-primary-subtle"];
+                                $categoria = $tarea->getCategoria();
+                                ?>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed <?php echo $coloresTitulo[$categoria] ?>"  type="button" data-bs-toggle="collapse" data-bs-target=<?php echo '#descripcion'.$numTarea; ?> aria-expanded="false" aria-controls=<?php echo 'descripcion'.$numTarea; ?>>
+                                            <?php echo "Tarea ".$numTarea.": ".$tarea->getNombre(); ?>
+                                        </button>
+                                        
+                                    </h2>
+                                    <div id=<?php echo 'descripcion'.$numTarea; ?> class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body d-flex flex-column g-1">
+                                            <?php
+                                                switch ($categoria) {
+                                                    case 'Contacto':
+                                                        echo "Descripcion: ".$tarea->getNombreContacto()."</p>";
+                                                        echo "<p>Contactar a: ".$tarea->getNombreContacto()."</p>";
+                                                        echo "<p>Numero: ".$tarea->getNumeroContacto()."</p>";
+                                                        echo "<p>Email: ".$tarea->getEmailContacto()."</p>";
+                                                        echo "<p>Razon: ".$tarea->getRazon()."</p>";
+                                                        echo '
+                                                            <form id="deleteTask" class="d-flex flex-column" action="index.php?action=eliminar" method="post">
+                                                                <input type="hidden" name="id" value="'.$key.'">
+                                                                <button type="submit" class="btn btn-outline-dark mb-2">Eliminar Tarea</button>
+                                                            </form>
+                                                        ';
+                                                        break;
+                                                    case 'Proceso':
+                                                        echo "<p>Descripcion: ".$tarea->getDescripcion()."</p>";
+                                                        foreach ($tarea->getSubtareas() as $keysubtarea=>$subtarea) {
+                                                            $numSubtarea = $keysubtarea + 1;
+                                                            echo "<p>Subtarea ".$numSubtarea.": ".$subtarea."</p>";
+                                                        }
+                                                        echo '
+                                                            <form id="deleteTask" class="d-flex flex-column" action="index.php?action=eliminar" method="post">
+                                                                <input type="hidden" name="id" value="'.$key.'">
+                                                                <button type="submit" class="btn btn-outline-dark mb-2">Eliminar Tarea</button>
+                                                            </form>
+                                                        ';
+                                                        break;
+                                                    case 'Recordatorio':
+                                                        echo "<p>Descripcion: ".$tarea->getDescripcion()."</p>";
+                                                        echo "<p>Fecha: ".$tarea->getFecha()."</p>";
+                                                        echo "<p>Hora: ".$tarea->getHora()."</p>";
+                                                        echo '
+                                                            <form id="deleteTask" class="d-flex flex-column" action="index.php?action=eliminar" method="post">
+                                                                <input type="hidden" name="id" value="'.$key.'">
+                                                                <button type="submit" class="btn btn-outline-dark mb-2">Eliminar Tarea</button>
+                                                            </form>
+                                                        ';
+                                                        break;
+                                                    default:
+                                                        # code...
+                                                        break;
+                                                }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                            </div>
+                        <?php else : ?>
+                            <p style="text-align: center; font-weight: 700">Aun no hay tareas cargadas</p>
+                        <?php endif; ?>
 
                     </main>
                 </div>

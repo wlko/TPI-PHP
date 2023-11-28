@@ -2,21 +2,16 @@
     require_once('Tarea.php');
 
     class TareaProceso extends Tarea {
-        private $categoria = 'Proceso';
         private $subTareas = [];
 
         // Constructor
-        public function __construct($nombre, $descripcion = '', $subTareas) {
-            parent::__construct($nombre, $descripcion);
+        public function __construct($nombre, $descripcion, $categoria, $subTareas) {
+            parent::__construct($nombre, $descripcion, $categoria);
             $this->subTareas = $subTareas;
         }
 
         // Getters
-        public function getCategoria() {
-            return $this->categoria;
-        }
-
-        public function getSubTareas() {
+        public function getSubtareas() {
             return $this->subTareas;
         }
 

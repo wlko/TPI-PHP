@@ -2,15 +2,14 @@
     require_once('Tarea.php');
 
     class TareaContacto extends Tarea {
-        private $categoria = 'Contacto';
         private $nombreContacto;
         private $numeroContacto;
         private $emailContacto;
         private $razon;
 
         // Constructor
-        public function __construct($nombre, $descripcion, $nombreContacto, $numeroContacto, $emailContacto, $razon = '') {
-            parent::__construct($nombre, $descripcion);
+        public function __construct($nombre, $descripcion, $categoria , $nombreContacto, $numeroContacto, $emailContacto, $razon = '') {
+            parent::__construct($nombre, $descripcion, $categoria);
             $this->nombreContacto = $nombreContacto;
             $this->numeroContacto = $numeroContacto;
             $this->emailContacto = $emailContacto;
@@ -18,10 +17,6 @@
         }
 
         // Getters y setters
-        public function getCategoria() {
-            return $this->categoria;
-        }
-
         public function getNombreContacto() {
             return $this->nombreContacto;
         }

@@ -1,0 +1,31 @@
+#containerApp {
+    max-width: 60vw;
+    height: 100vh;
+    margin: auto;
+    display: flex;
+    flex-flow: column;
+}
+header, #navbar {
+    width: 100%;
+}
+
+#navbar a {
+    margin: auto;
+}
+
+#containerApp header {
+    flex: 0 1 auto;
+}
+
+#containerApp #containerContent {
+    flex: 1 1 auto;
+}
+
+#containerContent{
+    width: 100%;
+    height: 100%;
+}
+
+#rowTask {
+    height: 100%;
+}
